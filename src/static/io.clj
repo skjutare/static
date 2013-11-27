@@ -55,9 +55,9 @@
   (let [[metadata & content] (read-string
                               (str \( (slurp file :encoding (:encoding (config))) \)))]
     [metadata (delay (binding [*ns* (the-ns 'static.core)]
-                       (->> content 
+                       (->> content
                             (map eval)
-                            last 
+                            last
                             html)))]))
 
 (defn- read-cssgen [file]
@@ -97,7 +97,6 @@
                                            "html"]) true)) [] )))
 
 (def read-template
-  (memoize
    (fn [template]
      (let [extension (FilenameUtils/getExtension (str template))]
        (cond (= extension "clj")
@@ -108,7 +107,7 @@
                   read-string)]
              :default
              [:html
-              (load-template (dir-path :templates) template)])))))
+              (load-template (dir-path :templates) template)]))))
 
 (defn write-out-dir [file str]
   (FileUtils/writeStringToFile
